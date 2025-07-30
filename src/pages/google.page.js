@@ -19,7 +19,13 @@ class GooglePage {
     // Actions
     async open() {
         await browser.url('https://www.google.com');
-        await browser.maximizeWindow();
+        // Note: maximizeWindow not available in devtools protocol, using setWindowSize instead
+        try {
+            await browser.setWindowSize(1280, 1024);
+        } catch (e) {
+            // If setWindowSize fails, continue without maximizing
+            console.log('Window resize not supported in current mode');
+        }
     }
 
     async search(searchTerm) {

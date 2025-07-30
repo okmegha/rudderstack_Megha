@@ -4,7 +4,7 @@ exports.config = {
 
     // Specs patterns
     specs: [
-        './src/specs/**/*.js'
+        './features/**/*.feature'
     ],
 
     // Patterns to exclude
@@ -22,12 +22,24 @@ exports.config = {
     }],
 
     // Test framework to use
-    framework: 'mocha',
+    framework: 'cucumber',
 
-    // Mocha options
-    mochaOpts: {
-        ui: 'bdd',
-        timeout: 60000
+    // Cucumber options
+    cucumberOpts: {
+        require: ['./src/steps/**/*.js'],
+        backtrace: false,
+        requireModule: [],
+        dryRun: false,
+        failFast: false,
+        format: ['pretty'],
+        colors: true,
+        snippets: true,
+        source: true,
+        profile: [],
+        strict: false,
+        tagExpression: '',
+        timeout: 60000,
+        ignoreUndefinedDefinitions: false
     },
 
     // Test reporter

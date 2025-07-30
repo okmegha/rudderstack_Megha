@@ -8,10 +8,11 @@
     "test:firefox": "wdio run wdio.conf.js --suite firefox"
   },
   "devDependencies": {
-    "@wdio/cli": "^8.24.12",
-    "@wdio/mocha-framework": "^8.24.12",
-    "@wdio/local-runner": "^8.24.12",
-    "@wdio/spec-reporter": "^8.24.12",
+    "@wdio/cli": "^7.31.1",
+    "@wdio/cucumber-framework": "^7.31.1",
+    "@wdio/local-runner": "^7.31.1",
+    "@wdio/spec-reporter": "^7.31.1",
+    "chromedriver": "^127.0.3",
     "typescript": "^5.5.4",
     "@types/node": "^22.5.4"
   },
