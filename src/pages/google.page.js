@@ -1,24 +1,28 @@
-class GooglePage {
+const envConfig = require('../../config/environments');
+
+class RudderStackPage {
     // Selectors
-    get searchBox() {
-        return $('textarea[name="q"]');
+    get logo() {
+        return $('img[alt*="RudderStack"], .logo, [data-testid="logo"]');
     }
 
-    get searchButton() {
-        return $('input[value="Google Search"], input[aria-label="Google Search"]');
+    get navigationMenu() {
+        return $('.navigation, .nav, [data-testid="nav"]');
     }
 
-    get searchResults() {
-        return $$('h3');
+    get signInButton() {
+        return $('a[href*="signin"], button[data-testid="signin"], .sign-in');
     }
 
-    get feelingLuckyButton() {
-        return $('input[value="I\'m Feeling Lucky"]');
+    get getStartedButton() {
+        return $('a[href*="signup"], button[data-testid="signup"], .get-started');
     }
 
     // Actions
     async open() {
-        await browser.url('https://www.google.com');
+        const baseUrl = envConfig.getBaseUrl();
+        await browser.url(baseUrl);
+        
         // Note: maximizeWindow not available in devtools protocol, using setWindowSize instead
         try {
             await browser.setWindowSize(1280, 1024);
@@ -26,30 +30,45 @@ class GooglePage {
             // If setWindowSize fails, continue without maximizing
             console.log('Window resize not supported in current mode');
         }
+        
+        // Wait for page to load
+        await this.waitForPageLoad();
     }
 
-    async search(searchTerm) {
-        await this.searchBox.waitForDisplayed();
-        await this.searchBox.setValue(searchTerm);
-        await browser.keys('Enter');
+    async waitForPageLoad() {
+        // Wait for the page to be fully loaded
+        await browser.waitUntil(
+            () => browser.execute(() => document.readyState === 'complete'),
+            { timeout: 15000, timeoutMsg: 'RudderStack page did not load within 15 seconds' }
+        );
     }
 
-    async clickSearchButton() {
-        await this.searchButton.click();
+    async clickSignIn() {
+        await this.signInButton.waitForDisplayed({ timeout: 10000 });
+        await this.signInButton.click();
     }
 
-    async waitForResults() {
-        await this.searchResults[0].waitForDisplayed({ timeout: 10000 });
-    }
-
-    async getSearchResults() {
-        await this.waitForResults();
-        return this.searchResults;
+    async clickGetStarted() {
+        await this.getStartedButton.waitForDisplayed({ timeout: 10000 });
+        await this.getStartedButton.click();
     }
 
     async getPageTitle() {
         return await browser.getTitle();
     }
+
+    async isLogoDisplayed() {
+        try {
+            await this.logo.waitForDisplayed({ timeout: 5000 });
+            return await this.logo.isDisplayed();
+        } catch {
+            return false;
+        }
+    }
+
+    async getCurrentUrl() {
+        return await browser.getUrl();
+    }
 }
 
-module.exports = new GooglePage();
+module.exports = new RudderStackPage();

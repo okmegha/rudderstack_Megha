@@ -1,4 +1,24 @@
-class Helpers {
+class TestDataStore {
+    constructor() {
+        this.dataPlaneUrl = '';
+        this.writeKey = '';
+      }
+    
+      setDataPlaneUrl(url) {
+        this.dataPlaneUrl = url;
+      }
+    
+      getDataPlaneUrl() {
+        return this.dataPlaneUrl;
+      }
+    
+      setWriteKey(key) {
+        this.writeKey = key;
+      }
+    
+      getWriteKey() {
+        return this.writeKey;
+      }
     /**
      * Wait for element to be displayed
      * @param {WebdriverIO.Element} element 
@@ -50,4 +70,4 @@ class Helpers {
     }
 }
 
-module.exports = new Helpers();
+module.exports = new TestDataStore();

@@ -1,16 +1,11 @@
-Feature: Sample Web Application Test
-  As a user
-  I want to test basic web functionality
-  So that I can ensure the application works correctly
+Feature: Rudderstack End-to-End Event Flow
 
-  @smoke
-  Scenario: Open Google homepage and verify title
-    Given I open the Google homepage
-    When I check the page title
-    Then the title should contain "Google"
-
-  @search
-  Scenario: Perform a basic search
-    Given I open the Google homepage
-    When I search for "WebdriverIO"
-    Then I should see search results in the URL
+  Scenario: Validate event delivery from HTTP source to Webhook destination
+    Given I log in to the Rudderstack dashboard
+    When I navigate to the Connections page
+    And I store the Data Plane URL
+    And I store the Write Key of the HTTP source
+    And I send a sample event using browser script
+    And I click on the webhook destination
+    And I open the events tab
+    Then I read and log the delivered and failed event counts

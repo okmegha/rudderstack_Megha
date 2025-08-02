@@ -4,24 +4,37 @@
   "description": "Basic WebdriverIO + CucumberJS test automation framework",
   "scripts": {
     "test": "wdio run wdio.conf.js",
+    "test:dev": "cp .env.dev .env && wdio run wdio.conf.js",
+    "test:qa": "cp .env.qa .env && wdio run wdio.conf.js",
+    "test:prod": "cp .env.prod .env && wdio run wdio.conf.js",
     "test:chrome": "wdio run wdio.conf.js --suite chrome",
-    "test:firefox": "wdio run wdio.conf.js --suite firefox"
+    "test:firefox": "wdio run wdio.conf.js --suite firefox",
+    "install:deps": "npm install",
+    "lint": "echo 'No linting configured yet'",
+    "clean": "rm -rf allure-results screenshots/*.png",
+    "setup:env": "echo 'Environment files created. Use npm run test:dev, test:qa, or test:prod'"
   },
   "devDependencies": {
+    "@types/node": "^22.5.4",
     "@wdio/cli": "^7.31.1",
     "@wdio/cucumber-framework": "^7.31.1",
     "@wdio/local-runner": "^7.31.1",
     "@wdio/spec-reporter": "^7.31.1",
     "chromedriver": "^127.0.3",
-    "typescript": "^5.5.4",
-    "@types/node": "^22.5.4"
+    "typescript": "^5.5.4"
   },
-  "dependencies": {},
+  "dependencies": {
+    "axios": "^1.11.0"
+  },
   "keywords": [
     "webdriverio",
     "cucumber",
     "automation",
-    "testing"
+    "testing",
+    "rudderstack",
+    "qa",
+    "bdd",
+    "e2e"
   ],
   "author": "",
   "license": "MIT"

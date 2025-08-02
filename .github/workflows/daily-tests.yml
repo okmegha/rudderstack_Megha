@@ -1,0 +1,122 @@
+name: Daily E2E Tests
+
+on:
+  schedule:
+    # Run daily at 9:00 AM UTC (adjust timezone as needed)
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Allow manual trigger
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  test-dev:
+    runs-on: ubuntu-latest
+    name: Test Development Environment
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run tests on Dev environment
+      run: npm run test:dev
+      continue-on-error: true
+      
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-dev
+        path: |
+          allure-results/
+          screenshots/
+        retention-days: 30
+
+  test-qa:
+    runs-on: ubuntu-latest
+    name: Test QA Environment
+    needs: test-dev
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run tests on QA environment
+      run: npm run test:qa
+      continue-on-error: true
+      
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-qa
+        path: |
+          allure-results/
+          screenshots/
+        retention-days: 30
+
+  test-prod:
+    runs-on: ubuntu-latest
+    name: Test Production Environment
+    needs: test-qa
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Install dependencies
+      run: npm ci
+      
+    - name: Run tests on Production environment
+      run: npm run test:prod
+      continue-on-error: true
+      
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      if: always()
+      with:
+        name: test-results-prod
+        path: |
+          allure-results/
+          screenshots/
+        retention-days: 30
+
+  notify:
+    runs-on: ubuntu-latest
+    name: Notify Results
+    needs: [test-dev, test-qa, test-prod]
+    if: always()
+    
+    steps:
+    - name: Send notification
+      run: |
+        echo "Daily test execution completed"
+        echo "Dev: ${{ needs.test-dev.result }}"
+        echo "QA: ${{ needs.test-qa.result }}"
+        echo "Prod: ${{ needs.test-prod.result }}"
