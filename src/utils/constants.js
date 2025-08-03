@@ -1,10 +1,4 @@
-/**
- * Application constants and configuration values
- * Centralized location for all test constants
- */
-
 module.exports = {
-    // Timeout values (in milliseconds)
     TIMEOUTS: {
         DEFAULT_WAIT: 15000,
         LONG_WAIT: 30000,
@@ -13,7 +7,6 @@ module.exports = {
         API_REQUEST: 30000
     },
 
-    // Element wait strategies
     WAIT_STRATEGIES: {
         DISPLAYED: 'displayed',
         CLICKABLE: 'clickable',
@@ -21,7 +14,6 @@ module.exports = {
         EXISTS: 'exists'
     },
 
-    // API endpoints
     API: {
         ENDPOINTS: {
             IDENTIFY: '/v1/identify',
@@ -44,14 +36,12 @@ module.exports = {
         }
     },
 
-    // Test data patterns
     TEST_DATA: {
         EMAIL_PATTERN: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
         PHONE_PATTERN: /^\+?[\d\s-()]+$/,
         UUID_PATTERN: /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
     },
 
-    // Browser configurations
     BROWSER: {
         DEFAULT_VIEWPORT: {
             width: 1920,
@@ -63,7 +53,6 @@ module.exports = {
         }
     },
 
-    // File paths
     PATHS: {
         SCREENSHOTS: './screenshots',
         TEST_DATA: './data',
@@ -71,7 +60,6 @@ module.exports = {
         LOGS: './logs'
     },
 
-    // Error messages
     ERRORS: {
         ELEMENT_NOT_FOUND: 'Element not found within timeout period',
         API_REQUEST_FAILED: 'API request failed',
@@ -81,7 +69,6 @@ module.exports = {
         NETWORK_ERROR: 'Network connection error'
     },
 
-    // Success messages
     SUCCESS: {
         LOGIN_COMPLETED: 'Login completed successfully',
         API_REQUEST_SUCCESS: 'API request completed successfully',
@@ -89,7 +76,6 @@ module.exports = {
         NAVIGATION_SUCCESS: 'Navigation completed successfully'
     },
 
-    // Log levels
     LOG_LEVELS: {
         ERROR: 'error',
         WARN: 'warn',
@@ -98,7 +84,6 @@ module.exports = {
         TRACE: 'trace'
     },
 
-    // Environment types
     ENVIRONMENTS: {
         DEVELOPMENT: 'dev',
         QA: 'qa',
@@ -106,7 +91,6 @@ module.exports = {
         PRODUCTION: 'prod'
     },
 
-    // Character sets for random string generation
     CHARSETS: {
         ALPHANUMERIC: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789',
         NUMERIC: '0123456789',
@@ -115,7 +99,6 @@ module.exports = {
         UPPERCASE: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     },
 
-    // Retry configurations
     RETRY: {
         MAX_ATTEMPTS: 3,
         INITIAL_DELAY: 1000,

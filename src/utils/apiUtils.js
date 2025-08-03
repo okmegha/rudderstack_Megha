@@ -1,4 +1,3 @@
-// utils/apiUtils.js
 const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
@@ -6,10 +5,6 @@ const TestDataStore = require('./TestDataStore');
 const { API, TIMEOUTS, ERRORS } = require('./constants');
 const { getCurrentTimestamp } = require('./timestamp');
 
-/**
- * Validates required data before making API calls
- * @throws {Error} If validation fails
- */
 function validateApiData() {
   const writeKey = TestDataStore.getWriteKey();
   const dataPlaneUrl = TestDataStore.getDataPlaneUrl();
@@ -25,11 +20,6 @@ function validateApiData() {
   return { writeKey, dataPlaneUrl };
 }
 
-/**
- * Creates axios configuration with authentication
- * @param {string} writeKey - The write key for authentication
- * @returns {Object} Axios configuration object
- */
 function createApiConfig(writeKey) {
   return {
     headers: {
@@ -41,18 +31,12 @@ function createApiConfig(writeKey) {
   };
 }
 
-/**
- * Loads and validates JSON payload from file
- * @param {string} payloadPath - Path to the JSON payload file
- * @returns {Object} Parsed JSON payload
- */
 function loadPayload(payloadPath) {
   const fullPath = path.resolve(payloadPath);
   
   console.log(`🔍 Looking for payload file at: ${fullPath}`);
   
   if (!fs.existsSync(fullPath)) {
-    // Try relative to project root as fallback
     const projectRootPath = path.resolve(process.cwd(), payloadPath);
     console.log(`🔍 Trying fallback path: ${projectRootPath}`);
     
@@ -66,23 +50,16 @@ function loadPayload(payloadPath) {
   return loadPayloadFromPath(fullPath);
 }
 
-/**
- * Load and parse payload from a specific file path
- * @param {string} filePath - Full file path
- * @returns {Object} Parsed JSON payload
- */
 function loadPayloadFromPath(filePath) {
   try {
     console.log(`📄 Loading payload from: ${filePath}`);
     let fileContent = fs.readFileSync(filePath, 'utf8');
     
-    // Replace timestamp placeholder with current timestamp
     const currentTimestamp = getCurrentTimestamp();
     fileContent = fileContent.replace(/\{\{CURRENT_TIMESTAMP\}\}/g, currentTimestamp);
     
     const payload = JSON.parse(fileContent);
     
-    // Add current timestamp if not provided
     if (!payload.timestamp) {
       payload.timestamp = currentTimestamp;
       console.log(`⏱️ Added timestamp: ${payload.timestamp}`);
@@ -96,12 +73,6 @@ function loadPayloadFromPath(filePath) {
   }
 }
 
-/**
- * Sends an identify event to RudderStack
- * @param {string} payloadPath - Path to the JSON payload file
- * @param {Object} options - Optional configuration
- * @returns {Promise<Object>} API response
- */
 async function sendIdentifyEvent(payloadPath, options = {}) {
   try {
     const { writeKey, dataPlaneUrl } = validateApiData();

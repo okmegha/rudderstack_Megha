@@ -1,19 +1,12 @@
 exports.config = {
-    // Test runner services
     runner: 'local',
-
-    // Specs patterns
     specs: [
         './features/**/*.feature'
     ],
 
-    // Patterns to exclude
     exclude: [],
-
-    // Maximum instances to run in parallel
     maxInstances: 10,
 
-    // Capabilities define which browsers to run tests in
     capabilities: [{
         browserName: 'chrome',
         'goog:chromeOptions': {
@@ -21,10 +14,7 @@ exports.config = {
         }
     }],
 
-    // Test framework to use
     framework: 'cucumber',
-
-    // Cucumber options
     cucumberOpts: {
         require: ['./src/steps/**/*.js', './src/pages/**/*.js'],
         backtrace: false,
@@ -42,28 +32,16 @@ exports.config = {
         ignoreUndefinedDefinitions: false
     },
 
-    // Test reporter
     reporters: ['spec'],
-
-    // Logging level
     logLevel: 'info',
 
-    // If you only want to run your tests until a specific amount of tests have failed use bail
     bail: 0,
-
-    // Default timeout for all waitFor* commands
     waitforTimeout: 10000,
 
-    // Default timeout in milliseconds for request
     connectionRetryTimeout: 120000,
-
-    // Default request retries count
     connectionRetryCount: 3,
 
-    // Services
     services: [],
-
-    // Hooks
     beforeSession: function (config, capabilities, specs) {
         console.log('Starting WebDriver session...');
     },

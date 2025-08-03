@@ -1,8 +1,3 @@
-/**
- * Environment configuration helper
- * Loads environment-specific settings based on the current environment
- */
-
 const fs = require('fs');
 const path = require('path');
 
@@ -13,11 +8,9 @@ class EnvironmentConfig {
     }
 
     loadEnvironmentConfig() {
-        // First try to load from .env file (created by npm scripts)
         const mainEnvFile = path.join(process.cwd(), '.env');
         let envFile = mainEnvFile;
         
-        // If .env doesn't exist, fall back to environment-specific file
         if (!fs.existsSync(mainEnvFile)) {
             envFile = path.join(process.cwd(), `.env.${this.currentEnv}`);
         }

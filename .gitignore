@@ -1,29 +1,18 @@
-# Dependencies
 node_modules/
 npm-debug.log*
 .npm
-
-# Environment files (keep templates, ignore actual files)
-
-# Test results and reports
 allure-results/
 screenshots/*.png
 screenshots/*.jpg
 logs/
 *.log
-
-# Build and distribution
 dist/
 build/
-
-# IDE and editor files
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# OS generated files
 .DS_Store
 .DS_Store?
 ._*
@@ -31,29 +20,15 @@ build/
 .Trashes
 ehthumbs.db
 Thumbs.db
-
-# Temporary files
 *.tmp
 *.temp
-
-# Coverage reports
 coverage/
 *.lcov
-
-# Runtime data
 pids
 *.pid
 *.seed
 *.pid.lock
-
-# Optional npm cache directory
 .npm
-
-# Optional REPL history
 .node_repl_history
-
-# Output of 'npm pack'
 *.tgz
-
-# Yarn Integrity file
 .yarn-integrity

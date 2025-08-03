@@ -1,179 +1,185 @@
-# Contributing Guide
+Contributing Guide
 
-## Getting Started
+Getting Started
 
-1. **Fork the repository**
-2. **Clone your fork**
-   ```bash
-   git clone https://github.com/your-username/rudderstack_Megha.git
-   cd rudderstack_Megha
-   ```
-3. **Install dependencies**
-   ```bash
-   npm install
-   ```
+1. Fork the repository
+2. Clone your fork locally
+3. Install dependencies: `npm install`
+4. Create a feature branch
+5. Make your changes
+6. Run tests to ensure everything works
+7. Commit your changes with clear messages
+8. Push to your fork
+9. Create a pull request
 
-## Development Workflow
+Development Workflow
 
-### 1. Create a Feature Branch
+1. Create a Feature Branch
+
 ```bash
 git checkout -b feature/your-feature-name
+git checkout -b bugfix/issue-description
 ```
 
-### 2. Writing Tests
+2. Writing Tests
 
-#### Feature Files
-- Write BDD scenarios in `features/` directory
-- Use clear, descriptive scenario names
-- Follow Gherkin best practices
+Feature Files
 
-#### Step Definitions
-- Implement steps in `src/steps/`
-- Keep steps reusable and atomic
-- Use proper async/await patterns
+Write clear, readable Gherkin scenarios in the `features/` directory.
+Use present tense and active voice.
+Keep scenarios focused on business value.
 
-#### Page Objects
-- Create page objects in `src/pages/`
-- Use meaningful selector names
-- Implement helper methods for common actions
+Step Definitions
 
-### 3. Testing Your Changes
+Implement step definitions in `src/steps/`.
+Keep steps reusable and atomic.
+Use page objects for UI interactions.
 
-#### Local Testing
+Page Objects
+
+Create page objects in `src/pages/`.
+Use getter methods for element selectors.
+Implement action methods for user interactions.
+
+3. Testing Your Changes
+
+Local Testing
+
 ```bash
-# Test on QA environment
 npm run test:qa
-
-# Test specific feature
-npx wdio run wdio.conf.js --spec features/your-feature.feature
+npm run test:dev
 ```
 
-#### Environment Testing
+Environment Testing
+
 ```bash
-# Test all environments
 npm run test:dev
 npm run test:qa
 npm run test:prod
 ```
 
-### 4. Code Quality
+4. Code Quality
 
-#### Before Committing
-- Ensure all tests pass
-- Follow naming conventions
-- Add appropriate comments
-- Update documentation if needed
+Before Committing
 
-### 5. Submit Pull Request
+```bash
+npm run clean
+npm test
+```
 
-1. **Push your changes**
-   ```bash
-   git push origin feature/your-feature-name
-   ```
+5. Submit Pull Request
 
-2. **Create Pull Request**
-   - Use clear title and description
-   - Link to related issues
-   - Add screenshots if UI changes
+Create a descriptive title
+Include a detailed description of changes
+Reference any related issues
+Ensure all tests pass
+Request review from team members
 
-3. **Review Process**
-   - Automated tests will run
-   - Code review by team members
-   - Address feedback if needed
+Best Practices
 
-## Best Practices
+BDD Scenarios
 
-### BDD Scenarios
-- Use business-readable language
-- Follow Given-When-Then structure
-- Keep scenarios focused and independent
+Write from the user's perspective
+Focus on behavior, not implementation
+Keep scenarios independent and isolated
 
-### Page Objects
-- One page object per page/component
-- Use descriptive method names
-- Implement wait strategies
+Page Objects
 
-### Step Definitions
-- Make steps reusable across scenarios
-- Use parameters for dynamic data
-- Keep step logic simple
+Use descriptive element names
+Implement wait strategies
+Group related functionality
 
-## Code Standards
+Step Definitions
 
-### JavaScript/TypeScript
-- Use async/await for asynchronous operations
-- Follow camelCase naming convention
-- Add JSDoc comments for complex functions
+Keep steps simple and focused
+Avoid UI logic in step files
+Use page objects for interactions
 
-### File Organization
+Code Standards
+
+JavaScript/TypeScript
+
+Use consistent indentation (2 spaces)
+Follow camelCase naming convention
+Add JSDoc comments for public methods
+Handle errors appropriately
+
+File Organization
+
 ```
 src/
-├── pages/          # Page objects
-├── steps/          # Step definitions
-└── utils/          # Helper utilities
+├── pages/          # Page object classes
+├── steps/          # Step definition files  
+├── utils/          # Utility functions
+└── specs/          # Test specifications
 ```
 
-## Environment Management
+Environment Management
 
-### Adding New Environments
+Adding New Environments
+
 1. Create `.env.{environment}` file
-2. Add npm script in `package.json`
-3. Update GitHub workflow if needed
+2. Add environment-specific configurations
+3. Update npm scripts in package.json
 
-### Credentials
-- Never commit actual credentials
-- Use environment variables
-- Update `.gitignore` for sensitive files
+Credentials
 
-## Debugging
+Store sensitive data in environment files
+Never commit actual credentials to version control
+Use placeholder values in template files
 
-### Test Failures
-- Check screenshots in `screenshots/`
-- Review console logs
-- Use browser developer tools
+Debugging
 
-### Local Development
+Test Failures
+
+Check screenshots in `screenshots/` directory
+Review logs for error messages
+Use browser developer tools for element inspection
+
+Local Development
+
 ```bash
-# Verbose logging
-DEBUG=true npm run test:qa
-
-# Headful mode (see browser)
-HEADLESS=false npm run test:qa
+npm run test:dev -- --verbose
+npm run test:dev -- --headful
 ```
 
-## Documentation
+Documentation
 
-### Update Documentation
-- README.md for user-facing changes
-- CONTRIBUTING.md for development changes
-- Inline comments for complex logic
+Update Documentation
 
-### Screenshots
-- Include relevant screenshots in PRs
-- Update test documentation images
+Keep README.md current
+Update API documentation for new features
+Add examples for complex functionality
 
-## Release Process
+Screenshots
 
-### Versioning
-- Follow semantic versioning
-- Update package.json version
-- Create release notes
+Include screenshots for visual changes
+Update documentation images when UI changes
 
-### Deployment
-- Merge to main/master branch
-- Automated tests run via GitHub Actions
-- Monitor daily test results
+Release Process
 
-## Support
+Versioning
 
-### Getting Help
-- Check existing documentation
-- Review GitHub issues
-- Ask team members
-- Create new issue if needed
+Follow semantic versioning (semver)
+Tag releases with version numbers
+Update CHANGELOG.md with release notes
 
-### Reporting Issues
-- Use issue templates
-- Include reproduction steps
-- Add relevant logs/screenshots
-- Specify environment details
+Deployment
+
+Test in staging environment first
+Run full test suite before release
+Document deployment steps
+
+Support
+
+Getting Help
+
+Check existing documentation first
+Search issues for similar problems
+Create detailed issue reports with reproduction steps
+
+Reporting Issues
+
+Use issue templates when available
+Include environment information
+Provide clear reproduction steps
