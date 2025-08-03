@@ -13,7 +13,14 @@ class EnvironmentConfig {
     }
 
     loadEnvironmentConfig() {
-        const envFile = path.join(process.cwd(), `.env.${this.currentEnv}`);
+        // First try to load from .env file (created by npm scripts)
+        const mainEnvFile = path.join(process.cwd(), '.env');
+        let envFile = mainEnvFile;
+        
+        // If .env doesn't exist, fall back to environment-specific file
+        if (!fs.existsSync(mainEnvFile)) {
+            envFile = path.join(process.cwd(), `.env.${this.currentEnv}`);
+        }
         
         if (!fs.existsSync(envFile)) {
             console.warn(`Environment file ${envFile} not found. Using default configuration.`);

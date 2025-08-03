@@ -1,8 +1,8 @@
 const { Given, When, Then } = require('@wdio/cucumber-framework');
-const LoginPage = require('../../pageobjects/loginPage');
-const ConnectionPage = require('../../pageobjects/ConnectionPage');
-
-let dataPlaneUrl, writeKey;
+const LoginPage = require('../pages/LoginPage');
+const ConnectionPage = require('../pages/ConnectionPage');
+const { sendIdentifyEvent } = require('../utils/apiUtils');
+const TestDataStore = require('../utils/TestDataStore');
 
 Given('I log in to the Rudderstack dashboard', async () => {
     await LoginPage.login();
@@ -13,32 +13,23 @@ When('I navigate to the Connections page', async () => {
 });
 
 When('I store the Data Plane URL', async () => {
-    await ConnectionPage.getDataPlaneUrl();
+    const dataPlaneUrl = await ConnectionPage.getDataPlaneUrl();
+    TestDataStore.setDataPlaneUrl(dataPlaneUrl);
 });
 
 When('I store the Write Key of the HTTP source', async () => {
-    await ConnectionPage.getWriteKey();
+    const writeKey = await ConnectionPage.getWriteKey();
+    TestDataStore.setWriteKey(writeKey);
 });
 
 When('I send a sample event using browser script', async () => {
-    const payload = {
-        userId: "ui_test_user",
-        event: "UI Test Event",
-        properties: { action: "click", label: "test" }
-    };
-
-    await browser.executeAsync((url, key, data, done) => {
-        fetch(`${url}/v1/track`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': key
-            },
-            body: JSON.stringify(data)
-        })
-        .then(res => done(`Status: ${res.status}`))
-        .catch(err => done(`Error: ${err.message}`));
-    }, dataPlaneUrl, writeKey, payload);
+    try {
+        await sendIdentifyEvent('./data/identify.json');
+        console.log('Sample event sent successfully');
+    } catch (error) {
+        console.error('Failed to send sample event:', error.message);
+        throw error;
+    }
 });
 
 When('I click on the webhook destination', async () => {

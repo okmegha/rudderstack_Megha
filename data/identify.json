@@ -10,6 +10,6 @@
           "name": "http"
       }
     },
-    "timestamp": "2020-02-02T00:23:09.544Z"
+    "timestamp": "{{CURRENT_TIMESTAMP}}"
   }
   

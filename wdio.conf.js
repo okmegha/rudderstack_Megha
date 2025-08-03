@@ -26,7 +26,7 @@ exports.config = {
 
     // Cucumber options
     cucumberOpts: {
-        require: ['./src/steps/**/*.js'],
+        require: ['./src/steps/**/*.js', './src/pages/**/*.js'],
         backtrace: false,
         requireModule: [],
         dryRun: false,
